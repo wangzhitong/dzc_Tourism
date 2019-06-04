@@ -60,39 +60,8 @@ public class SceneryController {
 		return	Msg.success();
 	}
 	
-	
-	@RequestMapping(value = "save1",method = RequestMethod.POST)
-	public String save(//@RequestBody String title,
-//			@RequestBody String subheading,
-//			@RequestBody Date createTime,
-//			@RequestBody String content,
-			@RequestBody MultipartFile multipartFile,RedirectAttributes model) {
-		System.out.println("11111111111111111");
-		if(multipartFile != null) {
-			System.out.println("222222222222222222222");
-			String fileName = multipartFile.getOriginalFilename();
-			String filePath = ClassUtils.getDefaultClassLoader().getResource("").getPath()+"static/upload/img";
-			File file = new File(filePath,fileName);
-			if(!file.getParentFile().exists()) {
-				file.getParentFile().mkdirs();
-				System.out.println("3333333333333333333");
-			}
-			try {
-				multipartFile.transferTo(file);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			System.out.println("444444444444444444444444");
-			String strPath = filePath+"/"+fileName;
-			model.addAttribute("path", strPath);
-		}
-		return "redirect:save";
-	}
-	
-	
 	@RequestMapping(value = "/save",method = RequestMethod.POST)
 	public Msg saveScenery(@ModelAttribute String path,@RequestBody @Valid Scenery scenery,BindingResult result) {
-		System.out.println("============================="+path);
 		if(result.hasErrors()) {
 			Map<String,Object> map = new HashMap<>();
 			List<FieldError> fieldErrors = result.getFieldErrors();
